@@ -5,13 +5,10 @@ tap 'homebrew/dupes'
 tap 'homebrew/versions'
 tap 'homebrew/homebrew-php'
 
-brew 'coreutils'
-brew 'findutils'
-brew 'moreutils'
-brew 'yarn', args: ['--ignore-dependencies']
 brew 'git'
 brew 'zsh'
 brew 'zsh-completions'
+brew 'yarn', args: ['--ignore-dependencies']
 
 # Utilites
 cask 'iterm2'
