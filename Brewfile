@@ -18,8 +18,9 @@ cask 'spotify'
 cask 'vlc'
 
 # Web dev
-cask 'firefox'
+cask 'visual-studio-code'
 cask 'google-chrome'
+cask 'firefox'
 cask 'sequel-pro'
 cask 'postman'
 cask 'docker'
