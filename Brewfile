@@ -12,6 +12,8 @@ brew 'yarn', args: ['--ignore-dependencies']
 
 # Utilites
 cask 'iterm2'
+cask 'imageoptim'
+cask 'slack'
 
 # Media
 cask 'spotify'
@@ -24,3 +26,5 @@ cask 'firefox'
 cask 'sequel-pro'
 cask 'postman'
 cask 'docker'
+cask 'virtualbox'
+cask 'vagrant'
