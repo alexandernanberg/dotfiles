@@ -5,12 +5,8 @@ tap 'homebrew/dupes'
 tap 'homebrew/versions'
 tap 'homebrew/homebrew-php'
 
-brew 'git'
-brew 'zsh'
-brew 'zsh-completions'
-brew 'yarn', args: ['--ignore-dependencies']
-
 # Utilites
+brew 'yarn', args: ['--ignore-dependencies']
 cask 'iterm2'
 cask 'imageoptim'
 cask 'slack'
