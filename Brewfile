@@ -6,9 +6,10 @@ tap 'homebrew/versions'
 tap 'homebrew/homebrew-php'
 
 # Utilites
-brew 'yarn', args: ['--ignore-dependencies']
+brew 'yarn', args: ['--without-node']
 cask 'iterm2'
 cask 'imageoptim'
+cask 'kdiff3'
 cask 'slack'
 
 # Media
