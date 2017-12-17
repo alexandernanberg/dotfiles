@@ -1,4 +1,4 @@
-# dotfiles
+# ~/dotfiles
 > Personal set of dotfiles
 
 ## Todo's
