@@ -23,7 +23,6 @@ else
 	echo "";
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		copyFiles;
-    printf "\nInstalling Homebrew..."
     source ./brew.sh;
 	fi;
 fi;
