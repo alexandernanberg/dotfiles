@@ -4,7 +4,7 @@ cd "$(dirname "${BASH_SOURCE}")";
 
 git pull origin master;
 
-function doIt() {
+function copyFiles() {
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
 		--exclude ".editorconfig" \
@@ -17,12 +17,14 @@ function doIt() {
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	doIt;
+	copyFiles;
 else
 	read -p "This may overwrite existing files in your home directory. Are you sure? (y/N) " -n 1;
 	echo "";
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt;
+		copyFiles;
+    printf "\nInstalling Homebrew..."
+    source ./brew.sh;
 	fi;
 fi;
-unset doIt;
+unset copyFiles;

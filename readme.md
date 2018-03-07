@@ -1,6 +1,5 @@
 # ~/dotfiles
-> Personal set of dotfiles
+> My personal dotfiles
 
 ## Todo's
-- [ ] nvm
 - [ ] oh-my-zsh
