@@ -7,9 +7,9 @@ git pull origin master;
 function doIt() {
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
+		--exclude ".editorconfig" \
 		--exclude "bootstrap.sh" \
 		--exclude "readme.md" \
-		--exclude ".editorconfig" \
 		--exclude "license" \
 		--exclude "Brewfile" \
 		--exclude "brew.sh" \
