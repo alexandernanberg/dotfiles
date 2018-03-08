@@ -2,8 +2,6 @@
 
 cd "$(dirname "${BASH_SOURCE}")";
 
-git pull origin master;
-
 function copyFiles() {
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
@@ -16,14 +14,15 @@ function copyFiles() {
 		-avh --no-perms . ~;
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	copyFiles;
-else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/N) " -n 1;
-	echo "";
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		copyFiles;
-    source ./brew.sh;
-	fi;
+read -p "This may overwrite existing files in your home directory. Are you sure? (y/N) " -n 1;
+echo "";
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  git pull origin master;
+  copyFiles;
+
+  if [ "$1" == "--brew" ]; then
+    sh ./brew.sh;
+  fi;
 fi;
+
 unset copyFiles;

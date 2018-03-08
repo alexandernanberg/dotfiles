@@ -38,4 +38,4 @@ set novisualbell
 " Searching
 set ignorecase
 set smartcase
-set hlserach
+set hlsearch

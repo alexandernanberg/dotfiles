@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install all homebrew packages inside Brewfile
-printf "\nInstalling Homebrew..."
+printf "\nInstalling Homebrew packages..."
 
 # Check for Homebrew Installation
 if ! which brew > /dev/null; then
