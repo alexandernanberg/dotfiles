@@ -10,6 +10,7 @@ cask 'iterm2'
 cask 'imageoptim'
 cask 'kdiff3'
 cask 'slack'
+cask '1password'
 
 # Media
 cask 'spotify'
