@@ -11,11 +11,11 @@ fi;
 # Update Homebrew
 brew update
 
-# Upgrade any already-installed formulae.
+# Upgrade any already-installed formulae
 brew upgrade
 
 # Install everything inside Brewfile
 brew bundle
 
-# Remove outdated versions from the cellar.
+# Remove outdated versions from the cellar
 brew cleanup
