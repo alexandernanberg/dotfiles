@@ -1,11 +1,11 @@
 cask_args appdir: '/Applications'
 
-tap 'homebrew/bundle'
 tap 'caskroom/fonts'
 
 # Utilites
 brew 'nvm'
-brew 'yarn', args: ['--without-node']
+brew 'yarn', args: ['ignore-dependencies']
+brew 'spectacle'
 cask 'iterm2'
 cask 'imageoptim'
 cask 'kdiff3'
@@ -17,8 +17,7 @@ cask 'spotify'
 cask 'vlc'
 
 # Design
-cask 'sketch'
-cask 'zeplin'
+cask 'figma'
 cask 'iconjar'
 
 # Web dev
@@ -26,10 +25,8 @@ cask 'visual-studio-code'
 cask 'google-chrome'
 cask 'firefox'
 cask 'sequel-pro'
-cask 'postman'
+cask 'insomnia'
 cask 'docker'
-cask 'virtualbox'
-cask 'vagrant'
 
 # Fonts
 cask 'font-fira-code'
