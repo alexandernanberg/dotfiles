@@ -30,3 +30,4 @@ cask 'docker'
 
 # Fonts
 cask 'font-fira-code'
+cask 'font-jetbrains-mono'
