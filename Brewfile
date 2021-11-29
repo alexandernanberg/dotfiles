@@ -1,7 +1,7 @@
 cask_args appdir: '/Applications'
 
 # Casks
-tap 'caskroom/cask-fonts'
+tap 'homebrew/cask-fonts'
 
 # Utilites
 brew 'zsh'
