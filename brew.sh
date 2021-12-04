@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Install all homebrew packages inside Brewfile
-printf "\nInstalling Homebrew packages..."
+printf "Installing Homebrew packages...\n"
 
-# Check for Homebrew Installation
+# Check for Homebrew installation
 if ! which brew > /dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi;

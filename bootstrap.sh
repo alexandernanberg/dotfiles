@@ -19,10 +19,8 @@ echo "";
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   git pull origin master;
   copyFiles;
-
-  if [ "$1" == "--brew" ]; then
-    sh ./brew.sh;
-  fi;
+  sh ./brew.sh;
+  sh ./zsh.sh;
 fi;
 
 unset copyFiles;

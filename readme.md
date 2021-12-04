@@ -1,5 +1,9 @@
 # ~/dotfiles
+
 > My personal dotfiles
 
-## Todo's
-- [ ] oh-my-zsh
+## Installation
+
+```bash
+sh boostrap.sh
+```
