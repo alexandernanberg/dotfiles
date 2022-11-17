@@ -1,5 +1,9 @@
-[pull]
-	rebase = true
 [user]
 	name = Alexander Nanberg
 	email = alex.nanberg@hotmail.com
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
