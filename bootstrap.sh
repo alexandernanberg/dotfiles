@@ -7,10 +7,12 @@ function copyFiles() {
 		--exclude ".DS_Store" \
 		--exclude ".editorconfig" \
 		--exclude "bootstrap.sh" \
-		--exclude "readme.md" \
-		--exclude "license" \
-		--exclude "Brewfile" \
 		--exclude "brew.sh" \
+		--exclude "Brewfile" \
+		--exclude "license" \
+		--exclude "macos.sh" \
+		--exclude "readme.md" \
+		--exclude "zsh.sh" \
 		-avh --no-perms . ~;
 }
 
@@ -19,6 +21,7 @@ echo "";
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   git pull origin master;
   copyFiles;
+  sh ./macos.sh;
   sh ./brew.sh;
   sh ./zsh.sh;
 fi;
