@@ -1,8 +1,5 @@
 cask_args appdir: '/Applications'
 
-# Casks
-tap 'homebrew/cask-fonts'
-
 # Utilites
 brew 'zsh'
 brew 'yarn', args: ['ignore-dependencies']
@@ -12,8 +9,7 @@ cask 'font-jetbrains-mono'
 
 # Applications
 cask '1password'
-cask 'blender'
-cask 'bruno'
+cask 'chatgpt'
 cask 'discord'
 cask 'figma'
 cask 'firefox'
@@ -26,6 +22,10 @@ cask 'postico'
 cask 'rectangle'
 cask 'slack'
 cask 'spotify'
-cask 'steam'
 cask 'visual-studio-code'
-cask 'vlc'
+cask 'yaak'
+
+# Optional
+# cask 'blender'
+# cask 'steam'
+# cask 'vlc'
