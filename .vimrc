@@ -5,17 +5,10 @@ filetype indent on
 " UI
 syntax on
 set number
-set cursorline
 set showmatch
 
-" Theme
-try
-  colorscheme onedark
-catch
-endtry
-
 " Encoding
-set encoding=utf8
+set encoding=utf-8
 
 " Update file when modfied
 set autoread
