@@ -1,0 +1,12 @@
+macos-non-native-fullscreen = true
+macos-titlebar-style = tabs
+window-save-state = never
+shell-integration-features = no-cursor
+
+# theme
+theme = Horizon
+window-colorspace = "display-p3"
+cursor-style = underline
+
+# font
+font-family = JetBrains Mono

@@ -69,7 +69,7 @@ dock_add() {
 
 dock_add "/System/Applications/Mail.app"
 dock_add "/Applications/Firefox.app"
-dock_add "/Applications/iTerm.app"
+dock_add "/Applications/Ghostty.app"
 dock_add "/Applications/Visual Studio Code.app"
 dock_add "/Applications/Slack.app"
 dock_add "/Applications/Spotify.app"
