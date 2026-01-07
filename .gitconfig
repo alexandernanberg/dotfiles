@@ -2,14 +2,29 @@
 	name = Alexander Nanberg
 	email = alex.nanberg@hotmail.com
 
+[init]
+	defaultBranch = main
+
+[core]
+	editor = vim
+
 [pull]
 	rebase = true
 
 [push]
 	autoSetupRemote = true
 
+[fetch]
+	prune = true
+
 [rebase]
-  autoStash = true
+	autoStash = true
 
 [branch]
 	sort = -committerdate
+
+[diff]
+	colorMoved = default
+
+[merge]
+	conflictstyle = diff3

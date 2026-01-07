@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
+# Close any open System Settings panes, to prevent them from overriding
+# settings we're about to change
+osascript -e 'tell application "System Settings" to quit'
 
 # Ask for the administrator password upfront
 sudo -v
@@ -33,6 +33,9 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # Set fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 1        # Fast key repeat (lower is faster, 1 is very fast)
 defaults write NSGlobalDomain InitialKeyRepeat -int 10 # Delay before repeat starts
+
+# Disable press-and-hold for special characters, enable key repeat instead
+defaults write -g ApplePressAndHoldEnabled -bool false
 
 # Disable automatic capitalization as it’s annoying when typing code
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
@@ -84,7 +87,7 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
 	'{"enabled" = 1;"name" = "MENU_CONVERSION";}' \
 	'{"enabled" = 1;"name" = "MENU_EXPRESSION";}' \
-	'{"enabled" = 1;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
+	'{"enabled" = 1;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}' \
 	'{"enabled" = 0;"name" = "DIRECTORIES";}' \
 	'{"enabled" = 0;"name" = "PDF";}' \
 	'{"enabled" = 0;"name" = "FONTS";}' \
@@ -105,15 +108,24 @@ defaults write com.apple.spotlight orderedItems -array \
 
 # Restart Spotlight to apply changes
 killall mds > /dev/null 2>&1
-killall SystemUIServer
-sudo mdutil -E /
-
-# Load new settings before rebuilding the index
-killall mds > /dev/null 2>&1
-# Make sure indexing is enabled for the main volume
 sudo mdutil -i on / > /dev/null
-# Rebuild the index from scratch
 sudo mdutil -E / > /dev/null
+
+###############################################################################
+# Finder                                                                      #
+###############################################################################
+
+# Show hidden files
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+# Keep folders on top when sorting by name
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+# Show all file extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Disable warning when changing file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 ###############################################################################
 # Kill affected applications                                                  #

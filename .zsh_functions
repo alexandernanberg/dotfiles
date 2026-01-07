@@ -1,0 +1,26 @@
+# Create a new git worktree and copy .env files
+wt() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: wt <branch-name> [base-branch]"
+    return 1
+  fi
+
+  local branch="$1"
+  local base="${2:-main}"
+  local repo_root=$(git rev-parse --show-toplevel)
+  local repo_name=$(basename "$repo_root")
+  local worktree_path="../${repo_name}-${branch}"
+
+  git worktree add -b "$branch" "$worktree_path" "$base" || return 1
+
+  cd "$repo_root"
+  find . -name ".env*" -type f -not -path "*/node_modules/*" | while read -r env_file; do
+    local target_dir="$worktree_path/$(dirname "$env_file")"
+    mkdir -p "$target_dir"
+    cp "$env_file" "$target_dir/"
+    echo "Copied: $env_file"
+  done
+
+  echo "\nWorktree created at: $worktree_path"
+  cd "$worktree_path"
+}

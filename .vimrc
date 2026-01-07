@@ -32,3 +32,8 @@ set novisualbell
 set ignorecase
 set smartcase
 set hlsearch
+set incsearch
+
+" Cursor position
+set ruler
+set laststatus=2

@@ -1,8 +1,7 @@
 cask_args appdir: '/Applications'
 
-# Utilites
+# Utilities
 brew 'zsh'
-brew 'yarn', args: ['ignore-dependencies']
 
 # Fonts
 cask 'font-jetbrains-mono'
