@@ -21,9 +21,9 @@ echo "";
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   git pull origin master;
   copyFiles;
-  sh ./macos.sh;
   sh ./brew.sh;
   sh ./zsh.sh;
+  sh ./macos.sh;
 fi;
 
 unset copyFiles;
