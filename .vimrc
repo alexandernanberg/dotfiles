@@ -10,14 +10,14 @@ set showmatch
 " Encoding
 set encoding=utf-8
 
-" Update file when modfied
+" Update file when modified
 set autoread
 
 " Whitespace
 set expandtab
 set smarttab
-set ai
-set si
+set autoindent
+set smartindent
 set wrap
 set tabstop=2
 set shiftwidth=2

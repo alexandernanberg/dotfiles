@@ -1,6 +1,7 @@
 cask_args appdir: '/Applications'
 
 # Utilities
+brew 'pnpm'
 brew 'zsh'
 
 # Fonts
@@ -15,8 +16,7 @@ cask 'firefox'
 cask 'ghostty'
 cask 'google-chrome'
 cask 'kdiff3'
-cask 'mullvadvpn'
-cask 'pnpm'
+cask 'mullvad-vpn'
 cask 'postico'
 cask 'rectangle'
 cask 'slack'

@@ -17,8 +17,9 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Disable automatic termination of inactive apps
 defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
-# Show battery percentage
+# Show battery percentage (the menuextra key only applies to macOS 12 and older)
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
@@ -67,7 +68,7 @@ defaults write com.apple.dock persistent-apps -array
 
 # Add specific apps to the Dock
 dock_add() {
-    defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+	defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 }
 
 dock_add "/System/Applications/Mail.app"
@@ -104,7 +105,7 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "SOURCE";}' \
 	'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
 	'{"enabled" = 0;"name" = "MENU_OTHER";}' \
-	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
+	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}'
 
 # Restart Spotlight to apply changes
 killall mds > /dev/null 2>&1
@@ -136,6 +137,7 @@ for app in "Activity Monitor" \
 	"Calendar" \
 	"cfprefsd" \
 	"Contacts" \
+	"ControlCenter" \
 	"Dock" \
 	"Finder" \
 	"Mail" \

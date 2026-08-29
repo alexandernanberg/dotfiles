@@ -1,43 +1,39 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Install all homebrew packages inside Brewfile
+set -euo pipefail
+
+ZSH_DIR="${ZSH:-$HOME/.oh-my-zsh}"
+
 printf "Installing oh-my-zsh...\n"
 
-# Check for oh-my-zsh installation
-if [ -z ${ZSH+x} ]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Check for oh-my-zsh installation. KEEP_ZSHRC stops the installer from
+# replacing the .zshrc that bootstrap.sh just copied into place, and
+# --unattended stops it from running zsh / calling chsh.
+if [ ! -d "$ZSH_DIR" ]; then
+  KEEP_ZSHRC=yes /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 else
   printf "> oh-my-zsh already installed\n"
-fi;
+fi
 
 # Install plugins
 printf "\nInstalling plugins...\n"
 
-printf "> zsh-syntax-highlighting "
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
-else
-  git -C "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" pull
-fi;
+plugins=(
+  "zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  "zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions.git"
+  "zsh-nvm https://github.com/lukechilds/zsh-nvm.git"
+  "pure https://github.com/sindresorhus/pure.git"
+)
 
-printf "> zsh-autosuggestions "
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-else
-  git -C "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" pull
-fi;
+for plugin in "${plugins[@]}"; do
+  read -r name url <<< "$plugin"
+  dir="$ZSH_DIR/custom/plugins/$name"
 
-printf "> zsh-nvm "
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-nvm" ]; then
-  git clone https://github.com/lukechilds/zsh-nvm.git "$HOME/.oh-my-zsh/custom/plugins/zsh-nvm"
-else
-  git -C "$HOME/.oh-my-zsh/custom/plugins/zsh-nvm" pull
-fi;
-
-printf "> pure "
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/pure" ]; then
-  git clone https://github.com/sindresorhus/pure.git "$HOME/.oh-my-zsh/custom/plugins/pure"
-else
-  git -C "$HOME/.oh-my-zsh/custom/plugins/pure" pull
-fi;
-
+  printf "> %s\n" "$name"
+  if [ ! -d "$dir" ]; then
+    git clone --depth 1 "$url" "$dir"
+  else
+    git -C "$dir" pull --ff-only
+  fi
+done

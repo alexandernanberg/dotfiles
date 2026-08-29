@@ -5,22 +5,32 @@ wt() {
     return 1
   fi
 
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel) || return 1
+
   local branch="$1"
   local base="${2:-main}"
-  local repo_root=$(git rev-parse --show-toplevel)
-  local repo_name=$(basename "$repo_root")
-  local worktree_path="../${repo_name}-${branch}"
+  local repo_name
+  repo_name=$(basename "$repo_root")
+  # Slashes in branch names would otherwise nest the worktree directory
+  local worktree_path="$(dirname "$repo_root")/${repo_name}-${branch//\//-}"
 
-  git worktree add -b "$branch" "$worktree_path" "$base" || return 1
+  if git show-ref --quiet --verify "refs/heads/$branch"; then
+    git worktree add "$worktree_path" "$branch" || return 1
+  else
+    git worktree add -b "$branch" "$worktree_path" "$base" || return 1
+  fi
 
-  cd "$repo_root"
-  find . -name ".env*" -type f -not -path "*/node_modules/*" | while read -r env_file; do
-    local target_dir="$worktree_path/$(dirname "$env_file")"
-    mkdir -p "$target_dir"
-    cp "$env_file" "$target_dir/"
-    echo "Copied: $env_file"
-  done
+  (
+    cd "$repo_root" || exit 1
+    find . -name node_modules -type d -prune -o -name ".env*" -type f -print |
+      while IFS= read -r env_file; do
+        mkdir -p "$worktree_path/$(dirname "$env_file")"
+        cp "$env_file" "$worktree_path/$(dirname "$env_file")/"
+        echo "Copied: $env_file"
+      done
+  )
 
-  echo "\nWorktree created at: $worktree_path"
+  print "\nWorktree created at: $worktree_path"
   cd "$worktree_path"
 }

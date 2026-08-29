@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-sh bootstrap.sh
+./bootstrap.sh
 ```
 
 Set Homebrew zsh as default shell:

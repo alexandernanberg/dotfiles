@@ -27,4 +27,4 @@
 	colorMoved = default
 
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
