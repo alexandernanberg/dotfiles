@@ -8,6 +8,9 @@
 [core]
 	editor = vim
 
+[include]
+	path = ~/.gitconfig.local
+
 [pull]
 	rebase = true
 
@@ -20,11 +23,20 @@
 [rebase]
 	autoStash = true
 
+[rerere]
+	enabled = true
+
 [branch]
 	sort = -committerdate
+
+[column]
+	ui = auto
+
+[commit]
+	verbose = true
 
 [diff]
 	colorMoved = default
 
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3

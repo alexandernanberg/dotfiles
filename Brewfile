@@ -1,7 +1,13 @@
 cask_args appdir: '/Applications'
 
-# Utilities
+# CLI
 brew 'zsh'
+brew 'git'
+brew 'gh'
+brew 'mise'
+brew 'ripgrep'
+brew 'fd'
+brew 'jq'
 
 # Fonts
 cask 'font-jetbrains-mono'
@@ -9,14 +15,14 @@ cask 'font-jetbrains-mono'
 # Applications
 cask '1password'
 cask 'chatgpt'
+cask 'claude'
+cask 'claude-code'
 cask 'discord'
 cask 'figma'
 cask 'firefox'
 cask 'ghostty'
 cask 'google-chrome'
-cask 'kdiff3'
 cask 'mullvadvpn'
-cask 'pnpm'
 cask 'postico'
 cask 'rectangle'
 cask 'slack'
