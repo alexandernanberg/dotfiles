@@ -7,6 +7,8 @@
 
 [core]
 	editor = vim
+	fsmonitor = true
+	untrackedCache = true
 
 [include]
 	path = ~/.gitconfig.local
@@ -19,6 +21,11 @@
 
 [fetch]
 	prune = true
+	writeCommitGraph = true
+	negotiationAlgorithm = skipping
+
+[checkout]
+	workers = 0
 
 [rebase]
 	autoStash = true
