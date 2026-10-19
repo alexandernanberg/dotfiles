@@ -21,7 +21,6 @@
 
 [fetch]
 	prune = true
-	writeCommitGraph = true
 	negotiationAlgorithm = skipping
 
 [checkout]
