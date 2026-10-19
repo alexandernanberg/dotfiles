@@ -4,6 +4,8 @@
 
 ## Installation
 
+Give your terminal Full Disk Access first (System Settings → Privacy & Security → Full Disk Access, then restart it). `macos.sh` needs it to add Spotlight exclusions.
+
 ```bash
 ./bootstrap.sh
 ```
