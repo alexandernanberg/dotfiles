@@ -125,6 +125,55 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "MENU_OTHER";}' \
 	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
 
+# Exclude folders from indexing (System Settings → Spotlight → Search Privacy).
+# Needs Full Disk Access for the terminal running this script.
+spotlight_exclude() {
+	local plist=/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist
+	sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" "$plist" &>/dev/null || sudo /usr/libexec/PlistBuddy -c "Add :Exclusions array" "$plist"
+	sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" "$plist" 2>/dev/null | sed 's/^ *//' | grep -qxF "$1" && return
+	sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $1" "$plist"
+}
+
+spotlight_excludes=(
+	# Code and agent worktrees
+	"$HOME/.claude"
+	"$HOME/conductor"
+	"$HOME/dev"
+	"$HOME/Downloads"
+
+	# Package managers and toolchains
+	"$HOME/.bun"
+	"$HOME/.cache"
+	"$HOME/.npm"
+	"$HOME/.nvm"
+	"$HOME/Library/pnpm"
+
+	# App data
+	"$HOME/Library/Application Support/Code"
+	"$HOME/Library/Application Support/Slack"
+	"$HOME/Library/Application Support/Zed"
+)
+for dir in "${spotlight_excludes[@]}"; do
+	spotlight_exclude "$dir" || echo "Couldn't exclude $dir from Spotlight (Full Disk Access?)" >&2
+done
+sudo killall mds >/dev/null 2>&1 || true
+
+###############################################################################
+# Siri suggestions & Apple Intelligence                                       #
+###############################################################################
+
+# Don't auto-enable Apple Intelligence after OS updates
+defaults write com.apple.CloudSubscriptionFeatures.optIn auto_opt_in -bool false
+
+# Disable "Learn from this App" and suggestions for every installed app
+app_ids=()
+while IFS= read -r app; do
+	id=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Contents/Info.plist" 2>/dev/null) && app_ids+=("$id")
+done < <(find /Applications /System/Applications /System/Applications/Utilities ~/Applications -maxdepth 2 -name '*.app' 2>/dev/null)
+IFS=$'\n' app_ids=($(printf '%s\n' "${app_ids[@]}" | sort -u)); unset IFS
+defaults write com.apple.suggestions SiriCanLearnFromAppBlacklist -array "${app_ids[@]}"
+defaults write com.apple.suggestions AppCanShowSiriSuggestionsBlacklist -array "${app_ids[@]}"
+
 ###############################################################################
 # Finder                                                                      #
 ###############################################################################
@@ -187,7 +236,7 @@ fi
 # Kill affected applications                                                  #
 ###############################################################################
 
-for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "WindowManager"; do
+for app in "cfprefsd" "Dock" "Finder" "suggestd" "SystemUIServer" "WindowManager"; do
 	killall "${app}" &> /dev/null || true
 done
 
