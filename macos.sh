@@ -148,10 +148,8 @@ spotlight_excludes=(
 	"$HOME/.nvm"
 	"$HOME/Library/pnpm"
 
-	# App data
-	"$HOME/Library/Application Support/Code"
-	"$HOME/Library/Application Support/Slack"
-	"$HOME/Library/Application Support/Zed"
+	# App data (Electron caches, app databases)
+	"$HOME/Library/Application Support"
 )
 for dir in "${spotlight_excludes[@]}"; do
 	spotlight_exclude "$dir" || echo "Couldn't exclude $dir from Spotlight (Full Disk Access?)" >&2
