@@ -127,11 +127,16 @@ defaults write com.apple.spotlight orderedItems -array \
 
 # Exclude folders from indexing (System Settings → Spotlight → Search Privacy).
 # Needs Full Disk Access for the terminal running this script.
+spotlight_plist=/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist
+spotlight_excluded() {
+	sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" "$spotlight_plist" 2>/dev/null | sed 's/^ *//' | grep -qxF "$1"
+}
+# PlistBuddy exits 0 even when it can't write, so re-read to confirm.
 spotlight_exclude() {
-	local plist=/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist
-	sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" "$plist" &>/dev/null || sudo /usr/libexec/PlistBuddy -c "Add :Exclusions array" "$plist"
-	sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" "$plist" 2>/dev/null | sed 's/^ *//' | grep -qxF "$1" && return
-	sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $1" "$plist"
+	spotlight_excluded "$1" && return
+	sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" "$spotlight_plist" &>/dev/null || sudo /usr/libexec/PlistBuddy -c "Add :Exclusions array" "$spotlight_plist" &>/dev/null
+	sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $1" "$spotlight_plist" &>/dev/null
+	spotlight_excluded "$1"
 }
 
 spotlight_excludes=(
