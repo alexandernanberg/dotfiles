@@ -10,9 +10,6 @@
 	fsmonitor = true
 	untrackedCache = true
 
-[include]
-	path = ~/.gitconfig.local
-
 [pull]
 	rebase = true
 
@@ -46,3 +43,7 @@
 
 [merge]
 	conflictstyle = zdiff3
+
+# Last, so local settings override everything above
+[include]
+	path = ~/.gitconfig.local
