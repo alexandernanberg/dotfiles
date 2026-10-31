@@ -6,13 +6,26 @@ wt() {
   fi
 
   local branch="$1"
-  local base="${2:-main}"
+  local base="$2"
   local repo_root
   repo_root=$(git rev-parse --show-toplevel) || return 1
-  local repo_name
-  repo_name=$(basename "$repo_root")
+  local repo_name="${repo_root:t}"
   local slug="${branch//\//-}"
-  local worktree_path="../${repo_name}-${slug}"
+  # Absolute, so it doesn't depend on which subdirectory wt runs from
+  local worktree_path="${repo_root:h}/${repo_name}-${slug}"
+
+  # Default to origin's default branch, then main, then master
+  if [[ -z "$base" ]]; then
+    base=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+    base="${base#origin/}"
+  fi
+  if [[ -z "$base" ]]; then
+    if git show-ref --verify --quiet refs/heads/main; then
+      base=main
+    else
+      base=master
+    fi
+  fi
 
   if git show-ref --verify --quiet "refs/heads/$branch"; then
     git worktree add "$worktree_path" "$branch" || return 1
