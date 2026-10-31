@@ -44,22 +44,22 @@ if [[ "$HAS_STEP" == false ]]; then
   MACOS=true
 fi
 
+# Copy tracked files only, so untracked or ignored files in the repo never land in $HOME
 copy_files() {
-  rsync -avh --no-perms \
-    --exclude ".git/" \
-    --exclude ".DS_Store" \
-    --exclude ".editorconfig" \
-    --exclude ".gitignore" \
-    --exclude "*.local" \
-    --exclude "bootstrap.sh" \
-    --exclude "brew.sh" \
-    --exclude "Brewfile" \
-    --exclude "Brewfile.local" \
-    --exclude "license" \
-    --exclude "macos.sh" \
-    --exclude "readme.md" \
-    --exclude "zsh.sh" \
-    . ~
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "--dotfiles needs a git clone of this repo" >&2
+    exit 1
+  fi
+  git ls-files -z -- . \
+    ':!:.editorconfig' \
+    ':!:.gitignore' \
+    ':!:bootstrap.sh' \
+    ':!:brew.sh' \
+    ':!:Brewfile' \
+    ':!:macos.sh' \
+    ':!:readme.md' \
+    ':!:zsh.sh' |
+    rsync -avh --no-perms --from0 --files-from=- . ~
 }
 
 if [[ "$YES" != true ]]; then
