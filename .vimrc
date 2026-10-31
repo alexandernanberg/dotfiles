@@ -10,7 +10,7 @@ set showmatch
 " Encoding
 set encoding=utf-8
 
-" Update file when modfied
+" Update file when modified
 set autoread
 
 " Whitespace
