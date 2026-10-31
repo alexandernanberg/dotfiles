@@ -5,6 +5,18 @@ set -euo pipefail
 # settings we're about to change
 osascript -e 'tell application "System Settings" to quit' >/dev/null 2>&1 || true
 
+# Ask for the password once, up front
+sudo -v
+
+###############################################################################
+# Security                                                                    #
+###############################################################################
+
+# Touch ID for sudo (survives OS updates; see sudo_local.template)
+if [[ -f /etc/pam.d/sudo_local.template ]] && { [[ ! -f /etc/pam.d/sudo_local ]] || ! grep -q '^auth.*pam_tid\.so' /etc/pam.d/sudo_local; }; then
+	sed 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local >/dev/null
+fi
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
@@ -123,7 +135,7 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "SOURCE";}' \
 	'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
 	'{"enabled" = 0;"name" = "MENU_OTHER";}' \
-	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
+	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}'
 
 # Exclude folders from indexing (System Settings → Spotlight → Search Privacy).
 # Needs Full Disk Access for the terminal running this script.
@@ -225,15 +237,6 @@ defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
 
 # Screenshots: no floating thumbnail
 defaults write com.apple.screencapture show-thumbnail -bool false
-
-###############################################################################
-# Security                                                                    #
-###############################################################################
-
-# Touch ID for sudo (survives OS updates; see sudo_local.template)
-if [[ -f /etc/pam.d/sudo_local.template ]] && { [[ ! -f /etc/pam.d/sudo_local ]] || ! grep -q '^auth.*pam_tid\.so' /etc/pam.d/sudo_local; }; then
-	sed 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local >/dev/null
-fi
 
 ###############################################################################
 # Kill affected applications                                                  #
