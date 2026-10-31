@@ -11,7 +11,8 @@ if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
   RUNZSH=no CHSH=no KEEP_ZSHRC=yes \
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else
-  printf "> oh-my-zsh already installed\n"
+  printf "> oh-my-zsh already installed, updating\n"
+  ZSH="$HOME/.oh-my-zsh" zsh -f "$HOME/.oh-my-zsh/tools/upgrade.sh"
 fi
 
 clone_or_update() {
@@ -37,7 +38,7 @@ clone_or_update https://github.com/zsh-users/zsh-autosuggestions.git \
 
 printf "> pure\n"
 clone_or_update https://github.com/sindresorhus/pure.git \
-  "$ZSH_CUSTOM/themes/pure"
+  "$ZSH_CUSTOM/plugins/pure"
 
 if command -v mise >/dev/null; then
   printf "\nInstalling mise runtimes...\n"

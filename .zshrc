@@ -37,11 +37,7 @@ alias ll="ls -la"
 alias pn="pnpm"
 
 # Pure prompt
-if [[ -d "$ZSH/custom/themes/pure" ]]; then
-  fpath+=("$ZSH/custom/themes/pure")
-elif [[ -d "$ZSH/custom/plugins/pure" ]]; then
-  fpath+=("$ZSH/custom/plugins/pure")
-fi
+fpath+=("$ZSH/custom/plugins/pure")
 autoload -U promptinit; promptinit
 prompt pure
 
