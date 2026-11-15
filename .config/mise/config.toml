@@ -2,3 +2,13 @@
 node = "lts"
 pnpm = "latest"
 bun = "latest"
+
+# Global CLIs
+"npm:eas-cli" = "latest"
+# Vercel's own packages dropped npm provenance around 58.4, which trips mise's
+# no-downgrade trust policy. Exempt Vercel's packages; third-party deps stay checked.
+"npm:vercel" = { version = "latest", trust_policy_excludes = ["vercel", "@vercel/*"] }
+
+[settings]
+# Respect .nvmrc and .node-version in projects
+idiomatic_version_file_enable_tools = ["node"]
