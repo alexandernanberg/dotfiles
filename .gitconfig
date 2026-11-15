@@ -1,6 +1,11 @@
 [user]
 	name = Alexander Nanberg
 	email = alex.nanberg@hotmail.com
+	signingkey = ~/.ssh/id_ed25519.pub
+
+# Sign commits and tags with the SSH key (the agent holds the passphrase)
+[gpg]
+	format = ssh
 
 [init]
 	defaultBranch = main
@@ -37,6 +42,10 @@
 
 [commit]
 	verbose = true
+	gpgsign = true
+
+[tag]
+	gpgsign = true
 
 [diff]
 	colorMoved = default
