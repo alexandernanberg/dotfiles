@@ -235,6 +235,11 @@ defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false
 defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false
 defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
 
+# Hide widgets on the desktop and in Stage Manager; don't use iPhone widgets
+defaults write com.apple.WindowManager StandardHideWidgets -bool true
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool true
+defaults write com.apple.chronod remoteWidgetsEnabled -bool false
+
 # Screenshots: no floating thumbnail
 defaults write com.apple.screencapture show-thumbnail -bool false
 
