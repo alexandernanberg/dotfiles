@@ -4,6 +4,7 @@ pnpm = "latest"
 bun = "latest"
 
 # Global CLIs
+"npm:cf" = "latest"
 "npm:eas-cli" = "latest"
 # Vercel's own packages dropped npm provenance around 58.4, which trips mise's
 # no-downgrade trust policy. Exempt Vercel's packages; third-party deps stay checked.
