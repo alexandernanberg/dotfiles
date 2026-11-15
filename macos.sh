@@ -161,8 +161,8 @@ spotlight_excludes=(
 	# Package managers and toolchains
 	"$HOME/.bun"
 	"$HOME/.cache"
+	"$HOME/.local/share/mise"
 	"$HOME/.npm"
-	"$HOME/.nvm"
 	"$HOME/Library/pnpm"
 
 	# App data (Electron caches, app databases)
